@@ -1,7 +1,4 @@
-// import { createSlice } from "@reduxjs/toolkit";
-// import { initialRootState } from "../initialState";
-
-import { Draft, PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { Draft, createSlice } from "@reduxjs/toolkit";
 
 export const initialRootState = {
   isLoading: false,
@@ -21,7 +18,10 @@ export function handlePending(state: Draft<typeof initialRootState>) {
 //   state.error = action.payload.error;
 // }
 
-function handleRejected(state: Draft<typeof initialRootState>, { payload }) {
+export function handleRejected(
+  state: Draft<typeof initialRootState>,
+  { payload }
+) {
   state.isLoading = false;
   state.error = payload;
 }

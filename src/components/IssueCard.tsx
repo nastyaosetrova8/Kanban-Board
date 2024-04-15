@@ -1,24 +1,16 @@
 import { Box, Text } from "@chakra-ui/react";
-import { Issue, IssueModel } from "../helpers/models";
-import { useState } from "react";
+import { Issue } from "../helpers/models";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { calculateDaysAgo } from "../helpers/helpers";
 
 interface Props {
   issue: Issue;
 }
 
 const IssueCard = ({ issue }: Props) => {
-  //   const { ref, isDragging } = useIssueDragAndDrop<HTMLDivElement>({
-  //     issue,
-  //     index: index,
-  //     handleDropHover,
-  //   });
-
-  const [mouseIsOver, setMouseIsOver] = useState(false);
-
-  // const issues = useSelector(selectIssues);
-  // console.log(issues);
+  const createdAt = issue.created_at;
+  const daysAgo = calculateDaysAgo(createdAt);
 
   const {
     setNodeRef,
@@ -33,7 +25,6 @@ const IssueCard = ({ issue }: Props) => {
       type: "Issue",
       issue,
     },
-    // disabled: editMode,
   });
 
   const style = {
@@ -45,25 +36,13 @@ const IssueCard = ({ issue }: Props) => {
     return (
       <Box
         ref={setNodeRef}
-        style={style}
         as="div"
-        w={300}
-        p="4px 4px 2px"
-        bg="gray"
-        opacity={30}
-        // p={2.5}
-        h={100}
-        minH={100}
-        display="flex"
-        alignItems="center"
-        border="1px solid white"
+        bg="#000003a2"
+        opacity="30px"
+        minH="160px"
+        border="1px solid #646cff"
         rounded="24px"
-        // cursor="grab"
-        // position="relative"
-        //   className="
-        //   opacity-30
-        // bg-mainBackgroundColor p-2.5 h-[100px] min-h-[100px] items-center flex text-left rounded-xl border-2 border-rose-500  cursor-grab relative
-        // "
+        cursor="grab"
       />
     );
   }
@@ -73,114 +52,28 @@ const IssueCard = ({ issue }: Props) => {
       ref={setNodeRef}
       style={style}
       as="div"
-      // role="group"
-      // position="relative"
       rounded="24px"
-      w={300}
-      p="4px 4px 2px"
-      // pl={4}
-      // pr={4}
-      // pt={4}
-      // pb={2}
+      w="100%"
+      p="16px"
       boxShadow="xl"
-      // cursor="grab"
-      bgColor="blue"
-      _hover={{ border: "1px solid white" }}
-      //   opacity={isDragging ? 0.5 : 1}
+      cursor="grab"
+      bgColor="#ffffff"
+      border="1px solid #000003a2"
+      _hover={{ borderColor: "#646cff" }}
       {...attributes}
       {...listeners}
-      // onMouseEnter={() => {
-      //   setMouseIsOver(true);
-      // }}
-      // onMouseLeave={() => {
-      //   setMouseIsOver(false);
-      // }}
     >
-      <Text textAlign="start">{issue.id}</Text>
-      <Text textAlign="start" mb="8px">
-        Comments: {issue.comments}
-      </Text>
-
-      {/* <Textarea
-        value={issue.title}
-        fontWeight="roboto"
-        cursor="inherit"
-        border="none"
-        p={0}
-        resize="none"
-        minH={20}
-        focusBorderColor="green"
-        // color="gray.800"
-      >
+      <Text textAlign="start" fontWeight="600">
         {issue.title}
-      </Textarea> */}
+      </Text>
+      <Text textAlign="start">
+        #{issue.number} opened {daysAgo}
+      </Text>
+      <Text textAlign="start">
+        {issue.user.login} | Comments: {issue.comments}
+      </Text>
     </Box>
   );
 };
 
 export default IssueCard;
-
-// --------------------------------------------
-
-// import { Box, Text } from "@chakra-ui/react";
-// import { Issue, IssueModel } from "../helpers/models";
-// // import { useIssueDragAndDrop } from "../hooks/useIssueDragAndDrop";
-// import { useSelector } from "react-redux";
-// import { selectIssues } from "../redux/Issues/selectors";
-
-// type IssueProps = {
-//   index: number;
-//   issue: IssueModel;
-//   onDropHover: (i: number, j: number) => void;
-// };
-
-// const IssueCard = ({ index, issue }: IssueProps) => {
-//   //   const { ref, isDragging } = useIssueDragAndDrop<HTMLDivElement>({
-//   //     issue,
-//   //     index: index,
-//   //     handleDropHover,
-//   //   });
-
-//   const issues = useSelector(selectIssues);
-//   console.log(issues);
-
-//   return (
-//     <Box
-//       //   ref={ref}
-//       as="div"
-//       role="group"
-//       position="relative"
-//       rounded="24px"
-//       w={300}
-//       pl={4}
-//       pr={4}
-//       pt={4}
-//       pb={2}
-//       boxShadow="xl"
-//       cursor="grab"
-//       bgColor={issue.color}
-//       //   opacity={isDragging ? 0.5 : 1}
-//     >
-//       <Text textAlign="start">{issues.title}</Text>
-//       <Text textAlign="start" mb="8px">
-//         {issues.comment}
-//       </Text>
-//       {/* <Textarea
-//         value={issue.title}
-//         fontWeight="roboto"
-//         cursor="inherit"
-//         border="none"
-//         p={0}
-//         resize="none"
-//         minH={20}
-//         focusBorderColor="green"
-//         // color="gray.800"
-//       >
-//         {issue.title}
-//         {issue.text}
-//       </Textarea> */}
-//     </Box>
-//   );
-// };
-
-// export default IssueCard;

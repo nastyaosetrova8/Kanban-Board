@@ -9,20 +9,3 @@ export const calculateDaysAgo = (createdAt: string) => {
     ? "1 day ago"
     : `${differenceInDays} days ago`;
 };
-
-// const colors = [
-//   "red",
-//   "orange",
-//   "yellow",
-//   "green",
-//   "teal",
-//   "blue",
-//   "cyan",
-//   "purple",
-//   "pink",
-// ];
-
-// export function pickChakraRandomColor(variant = "") {
-//   const color = colors[Math.floor(Math.random() * colors.length)];
-//   return color + variant;
-// }

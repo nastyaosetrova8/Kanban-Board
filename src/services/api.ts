@@ -1,9 +1,7 @@
 import axios from "axios";
 
-const baseUrl = "https://api.github.com/";
+const baseUrl = "https://api.github.com/repos";
 
 export const instance = axios.create({
   baseURL: baseUrl,
 });
-
-// https://api.github.com/repos/${owner}/${repoName}/issues`);

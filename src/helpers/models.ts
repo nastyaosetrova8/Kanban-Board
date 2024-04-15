@@ -1,28 +1,7 @@
-// import { ListIssueType } from "./enums";
-
-// export interface IssueModel {
-//   id: string;
-//   title: string;
-//   text: string;
-//   column: ListIssueType;
-//   color: string;
-// }
-
-// export interface DragItem {
-//   index: number;
-//   id: IssueModel["id"];
-//   from: ListIssueType;
-// }
-
-// -----------------------------------
-// export type Status = "open" | "in progress" | "closed";
-
-// export interface Data {
-//   id: number;
-//   comments: number;
-//   status: Status;
-// }
-// -----------------------------------
+export interface GetIssuesThunkArgs {
+  owner: string;
+  repoName: string;
+}
 
 export type Id = string | number;
 export type columnId = string | number;
@@ -43,4 +22,18 @@ export type Issue = {
   };
   state: columnId;
   comments: number;
+};
+
+export type Props = {
+  issues: Issue[];
+  repoInfo: {
+    html_url: string;
+    clone_url: string;
+    name: string;
+    owner: {
+      login: string;
+      html_url: string;
+    };
+    stargazers_count: number;
+  };
 };

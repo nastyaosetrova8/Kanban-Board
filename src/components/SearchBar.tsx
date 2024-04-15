@@ -1,11 +1,19 @@
+import { useToast } from "@chakra-ui/react";
 import { FormEventHandler, useState } from "react";
 
 interface SearchBarProps {
   onFormSubmit: FormEventHandler<HTMLFormElement>;
+  // (searchQuery: string) => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ onFormSubmit }) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const toast = useToast();
+
+  const isValidUrl = (searchQuery) => {
+    const pattern = /^https?:\/\/github\.com\/[\w-]+\/[\w-]+$/;
+    return pattern.test(searchQuery);
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(
@@ -14,24 +22,33 @@ const SearchBar: React.FC<SearchBarProps> = ({ onFormSubmit }) => {
     );
   };
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
-    event.preventDefault();
-    // if (searchQuery.trim() === "") {
-    //   return;
-    // }
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    if (!isValidUrl(searchQuery)) {
+      toast({
+        description: "Please enter a valid HTTP address.",
+        status: "error",
+        duration: 1000,
+        isClosable: true,
+      });
+
+      return;
+    }
     onFormSubmit(searchQuery);
     setSearchQuery("");
   };
 
   return (
     <>
-      <header>
-        <form onSubmit={handleSubmit}>
-          <button type="submit">
-            Load
-            {/* <AiOutlineSearch size={24} /> */}
-            {/* <SearchFormBtnlabel>Search</SearchFormBtnlabel> */}
-          </button>
+      <header style={{ width: "100%" }}>
+        <form
+          onSubmit={handleSubmit}
+          style={{
+            width: "100%",
+            display: "flex",
+            gap: "8px",
+          }}
+        >
           <input
             value={searchQuery}
             onChange={handleChange}
@@ -40,8 +57,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onFormSubmit }) => {
             autoFocus
             placeholder="Enter repo URL"
             name="query"
-            style={{ width: "400px" }}
           />
+          <button type="submit">Load issues</button>
         </form>
       </header>
     </>
