@@ -24,6 +24,19 @@ export type Issue = {
   comments: number;
 };
 
+export type RepoInfoProp = {
+  repoInfo: {
+    html_url: string;
+    clone_url: string;
+    name: string;
+    owner: {
+      login: string;
+      html_url: string;
+    };
+    stargazers_count: number;
+  };
+};
+
 export type Props = {
   issues: Issue[];
   repoInfo: {

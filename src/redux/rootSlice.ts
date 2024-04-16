@@ -1,6 +1,11 @@
-import { Draft, createSlice } from "@reduxjs/toolkit";
+import { Draft, PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-export const initialRootState = {
+export interface RootState {
+  isLoading: boolean;
+  error: string | null;
+}
+
+export const initialRootState: RootState = {
   isLoading: false,
   error: null,
 };
@@ -10,20 +15,12 @@ export function handlePending(state: Draft<typeof initialRootState>) {
   state.error = null;
 }
 
-// export function handleRejected(
-//   state: Draft<typeof initialRootState>,
-//   action: PayloadAction<{ error: null }>
-// ) {
-//   state.isLoading = false;
-//   state.error = action.payload.error;
-// }
-
 export function handleRejected(
   state: Draft<typeof initialRootState>,
-  { payload }
+  action: PayloadAction<{ error: string | null }>
 ) {
   state.isLoading = false;
-  state.error = payload;
+  state.error = action.payload.error;
 }
 
 export function handleFulfilled(state: Draft<typeof initialRootState>) {

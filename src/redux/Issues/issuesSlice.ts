@@ -1,7 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getIssuesThunk, getRepoInfoThunk } from "./issuesThunk";
+import { Issue } from "../../helpers/models";
 
-export const initialState = {
+export interface IssuesState {
+  issues: Issue[];
+  repoInfo: null;
+}
+
+export const initialState: IssuesState = {
   issues: [],
   repoInfo: null,
 };
@@ -12,12 +18,13 @@ const issuesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) =>
     builder
-      .addCase(getIssuesThunk.fulfilled, (state, { payload }) => {
-        state.issues = payload;
+      .addCase(getIssuesThunk.fulfilled, (state, action) => {
+        state.issues = action.payload;
       })
-      .addCase(getRepoInfoThunk.fulfilled, (state, { payload }) => {
-        state.repoInfo = payload;
+      .addCase(getRepoInfoThunk.fulfilled, (state, action) => {
+        state.repoInfo = action.payload;
       }),
 });
 
 export const issuesReducer = issuesSlice.reducer;
+export const repoInfoReducer = issuesSlice.reducer;

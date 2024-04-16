@@ -1,16 +1,16 @@
 import { useToast } from "@chakra-ui/react";
-import { FormEventHandler, useState } from "react";
+import { useState } from "react";
 
 interface SearchBarProps {
-  onFormSubmit: FormEventHandler<HTMLFormElement>;
-  // (searchQuery: string) => void;
+  onFormSubmit: // FormEventHandler<HTMLFormElement>;
+  (searchQuery: string) => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ onFormSubmit }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const toast = useToast();
 
-  const isValidUrl = (searchQuery) => {
+  const isValidUrl = (searchQuery: string) => {
     const pattern = /^https?:\/\/github\.com\/[\w-]+\/[\w-]+$/;
     return pattern.test(searchQuery);
   };
@@ -22,8 +22,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ onFormSubmit }) => {
     );
   };
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
+  // : FormEventHandler<HTMLFormElement>
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     if (!isValidUrl(searchQuery)) {
       toast({
         description: "Please enter a valid HTTP address.",
@@ -36,7 +37,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onFormSubmit }) => {
     }
     onFormSubmit(searchQuery);
     setSearchQuery("");
-  };
+  }
 
   return (
     <>

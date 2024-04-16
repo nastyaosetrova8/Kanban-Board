@@ -1,13 +1,6 @@
-import { Draft } from "@reduxjs/toolkit";
-import { initialRootState } from "./rootSlice";
-import { initialState } from "./Issues/issuesSlice";
+import { RootState } from "./store";
 
-export const selectIsLoading = (state: Draft<typeof initialRootState>) =>
-  state.isLoading;
-export const selectError = (state: Draft<typeof initialRootState>) =>
-  state.error;
-
-export const selectIssues = (state: Draft<typeof initialState>) =>
-  state.issues.issues;
-export const selectRepoInfo = (state: Draft<typeof initialState>) =>
-  state.issues.repoInfo;
+export const selectIsLoading = (state: RootState) => state.root.isLoading;
+export const selectError = (state: RootState) => state.root.error;
+export const selectIssues = (state: RootState) => state.issues.issues;
+export const selectRepoInfo = (state: RootState) => state.issues.repoInfo;

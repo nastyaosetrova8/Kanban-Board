@@ -30,7 +30,7 @@ const defaultCols: Column[] = [
   },
 ];
 
-const Board = ({ issues: initialIssues, repoInfo }: Props) => {
+const Board: React.FC<Props> = ({ issues: initialIssues, repoInfo }) => {
   const [issues, setIssues] = useState<Issue[]>(initialIssues);
   const [columns] = useState<Column[]>(defaultCols);
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
@@ -140,15 +140,17 @@ const Board = ({ issues: initialIssues, repoInfo }: Props) => {
           p="0"
           gap="18px"
         >
-          <SortableContext items={columnsId}>
-            {columns.map((col) => (
-              <ListIssue
-                key={col.id}
-                column={col}
-                issues={issues.filter((issue) => issue.state === col.id)}
-              />
-            ))}
-          </SortableContext>
+          {issues && (
+            <SortableContext items={columnsId}>
+              {columns.map((col) => (
+                <ListIssue
+                  key={col.id}
+                  column={col}
+                  issues={issues.filter((issue) => issue.state === col.id)}
+                />
+              ))}
+            </SortableContext>
+          )}
         </Container>
 
         {createPortal(

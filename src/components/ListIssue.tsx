@@ -10,7 +10,7 @@ interface Props {
   issues: Issue[];
 }
 
-const ListIssue = ({ column, issues }: Props) => {
+const ListIssue: React.FC<Props> = ({ column, issues }) => {
   const issuesIds = useMemo(() => {
     return issues.map((issue) => issue.id);
   }, [issues]);

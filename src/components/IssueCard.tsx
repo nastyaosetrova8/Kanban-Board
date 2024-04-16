@@ -8,7 +8,7 @@ interface Props {
   issue: Issue;
 }
 
-const IssueCard = ({ issue }: Props) => {
+const IssueCard: React.FC<Props> = ({ issue }) => {
   const createdAt = issue.created_at;
   const daysAgo = calculateDaysAgo(createdAt);
 
